@@ -1,0 +1,42 @@
+caso,expected,actual,passed,notes
+LIB1,Rechazado,Rechazado,PASS,Validation errors: isbn: El ISBN no puede superar 13 caracteres
+LIB2,Rechazado,Rechazado,PASS,"Validation errors: sinopsis: La sinopsis no puede superar 200 caracteres, idioma: El idioma debe contener entre 2 y 50 caracteres, edicion: La edición no puede superar 20 caracteres"
+LIB3,Aceptado,Aceptado,PASS,Redirected to Index page (creation successful)
+LIB4,Rechazado,Rechazado,PASS,Validation errors: idioma: El idioma debe contener entre 2 y 50 caracteres
+LIB5,Rechazado,Rechazado,PASS,"Validation errors: isbn: El ISBN no puede superar 13 caracteres, sinopsis: La sinopsis no puede superar 200 caracteres, idioma: El idioma solo puede contener letras"
+LIB6,Rechazado,Aceptado,FAIL,Redirected to Index page (creation successful)
+LIB7,Rechazado,Rechazado,PASS,Validation errors: isbn: El ISBN no puede superar 13 caracteres
+LIB8,Rechazado,Rechazado,PASS,Validation errors: edicion: La edición no puede superar 20 caracteres
+LIB9,Rechazado,Rechazado,PASS,Validation errors: idioma: El idioma debe contener entre 2 y 50 caracteres
+LIB10,Rechazado,Rechazado,PASS,"Validation errors: isbn: El ISBN no puede superar 13 caracteres, edicion: La edición no puede superar 20 caracteres"
+LIB11,Aceptado,Aceptado,PASS,Redirected to Index page (creation successful)
+LIB12,Rechazado,Rechazado,PASS,Validation errors: idioma: El idioma debe contener entre 2 y 50 caracteres
+LIB13,Rechazado,Rechazado,PASS,"Validation errors: isbn: El ISBN no puede superar 13 caracteres, idioma: El idioma debe contener entre 2 y 50 caracteres"
+LIB14,Rechazado,Rechazado,PASS,Validation errors: idioma: El idioma solo puede contener letras
+LIB15,Rechazado,Rechazado,PASS,Validation errors: sinopsis: La sinopsis no puede superar 200 caracteres
+LIB16,Rechazado,Rechazado,PASS,Validation errors: idioma: El idioma solo puede contener letras
+LIB17,Rechazado,Rechazado,PASS,"Validation errors: isbn: El ISBN no puede superar 13 caracteres, edicion: La edición no puede superar 20 caracteres"
+LIB18,Rechazado,Aceptado,FAIL,Redirected to Index page (creation successful)
+LIB19,Rechazado,Rechazado,PASS,"Validation errors: sinopsis: La sinopsis no puede superar 200 caracteres, idioma: El idioma solo puede contener letras"
+LIB20,Rechazado,Rechazado,PASS,Validation errors: idioma: El idioma debe contener entre 2 y 50 caracteres
+LIB21,Rechazado,Rechazado,PASS,"Validation errors: isbn: El ISBN no puede superar 13 caracteres, idioma: El idioma debe contener entre 2 y 50 caracteres"
+LIB22,Rechazado,Rechazado,PASS,Validation errors: titulo: El título es obligatorio
+LIB23,Rechazado,Rechazado,PASS,"Validation errors: titulo: El título es obligatorio, isbn: El ISBN no puede superar 13 caracteres, idioma: El idioma debe contener entre 2 y 50 caracteres"
+LIB24,Rechazado,Rechazado,PASS,"Validation errors: titulo: El título es obligatorio, sinopsis: La sinopsis no puede superar 200 caracteres, idioma: El idioma debe contener entre 2 y 50 caracteres"
+LIB25,Rechazado,Rechazado,PASS,"Validation errors: titulo: El título es obligatorio, idioma: El idioma solo puede contener letras"
+LIB26,Rechazado,Rechazado,PASS,"Validation errors: titulo: El título es obligatorio, edicion: La edición no puede superar 20 caracteres"
+LIB27,Rechazado,Rechazado,PASS,Validation errors: titulo: El título es obligatorio
+LIB28,Rechazado,Rechazado,PASS,"Validation errors: titulo: El título debe contener entre 1 y 50 caracteres, isbn: El ISBN no puede superar 13 caracteres, sinopsis: La sinopsis no puede superar 200 caracteres"
+LIB29,Rechazado,Rechazado,PASS,Validation errors: titulo: El título debe contener entre 1 y 50 caracteres
+LIB30,Rechazado,Rechazado,PASS,Validation errors: titulo: El título debe contener entre 1 y 50 caracteres
+LIB31,Rechazado,Rechazado,PASS,"Validation errors: titulo: El título debe contener entre 1 y 50 caracteres, idioma: El idioma solo puede contener letras"
+LIB32,Rechazado,Rechazado,PASS,"Validation errors: titulo: El título debe contener entre 1 y 50 caracteres, isbn: El ISBN no puede superar 13 caracteres, idioma: El idioma debe contener entre 2 y 50 caracteres"
+LIB33,Rechazado,Rechazado,PASS,"Validation errors: titulo: El título debe contener entre 1 y 50 caracteres, idioma: El idioma debe contener entre 2 y 50 caracteres"
+LIB34,Rechazado,Rechazado,PASS,"Validation errors: titulo: El título debe contener entre 1 y 50 caracteres, idioma: El idioma solo puede contener letras, edicion: La edición no puede superar 20 caracteres"
+LIB35,Rechazado,Rechazado,PASS,Validation errors: idioma: El idioma debe contener entre 2 y 50 caracteres
+LIB36,Rechazado,Rechazado,PASS,"Validation errors: idioma: El idioma debe contener entre 2 y 50 caracteres, edicion: La edición no puede superar 20 caracteres"
+LIB37,Rechazado,Rechazado,PASS,Validation errors: idioma: El idioma solo puede contener letras
+LIB38,Rechazado,Rechazado,PASS,Validation errors: isbn: El ISBN no puede superar 13 caracteres
+LIB39,Aceptado,Aceptado,PASS,Redirected to Index page (creation successful)
+LIB40,Rechazado,Rechazado,PASS,Validation errors: sinopsis: La sinopsis no puede superar 200 caracteres
+LIB41,Rechazado,Rechazado,PASS,Validation errors: isbn: El ISBN no puede superar 13 caracteres

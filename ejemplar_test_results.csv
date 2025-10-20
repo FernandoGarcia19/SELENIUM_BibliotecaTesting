@@ -1,0 +1,22 @@
+caso,expected,actual,passed,notes
+EJM1,Aceptado,Aceptado,PASS,Redirected to Index page (creation successful)
+EJM2,Rechazado,Rechazado,PASS,"Stayed on Create page, but no errors detected"
+EJM3,Rechazado,Rechazado,PASS,"Stayed on Create page, but no errors detected"
+EJM4,Aceptado,Aceptado,PASS,Redirected to Index page (creation successful)
+EJM5,Rechazado,Rechazado,PASS,"Stayed on Create page, but no errors detected"
+EJM6,Aceptado,Aceptado,PASS,Redirected to Index page (creation successful)
+EJM7,Rechazado,Rechazado,PASS,"Stayed on Create page, but no errors detected"
+EJM8,Aceptado,Aceptado,PASS,Redirected to Index page (creation successful)
+EJM9,Aceptado,Rechazado,FAIL,"Stayed on Create page, but no errors detected"
+EJM10,Rechazado,Rechazado,PASS,"Stayed on Create page, but no errors detected"
+EJM11,Rechazado,Rechazado,PASS,"Stayed on Create page, but no errors detected"
+EJM12,Aceptado,Rechazado,FAIL,"Stayed on Create page, but no errors detected"
+EJM13,Rechazado,Rechazado,PASS,"Stayed on Create page, but no errors detected"
+EJM14,Rechazado,Rechazado,PASS,"Stayed on Create page, but no errors detected"
+EJM15,Rechazado,Rechazado,PASS,"Stayed on Create page, but no errors detected"
+EJM16,Rechazado,Rechazado,PASS,"Stayed on Create page, but no errors detected"
+EJM17,Rechazado,Rechazado,PASS,"Stayed on Create page, but no errors detected"
+EJM18,Rechazado,Rechazado,PASS,"Stayed on Create page, but no errors detected"
+EJM19,Rechazado,Rechazado,PASS,"Stayed on Create page, but no errors detected"
+EJM20,Rechazado,Rechazado,PASS,"Stayed on Create page, but no errors detected"
+EJM21,Rechazado,Rechazado,PASS,"Stayed on Create page, but no errors detected"
