@@ -33,7 +33,6 @@ from selenium.webdriver.firefox.service import Service as FirefoxService
 from webdriver_manager.firefox import GeckoDriverManager
 import logging
 
-# Configure logging
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(levelname)s - %(message)s',
@@ -48,7 +47,6 @@ CREATE_URL = f"{BASE_URL}/Usuario/Create"
 INDEX_URL = f"{BASE_URL}/Usuario/Index"
 WAIT_TIMEOUT = 10
 
-# Validation Rules (from Entity Model)
 VALIDATIONS = {
     'primer_nombre': {
         'required': True,
@@ -134,12 +132,9 @@ class LectorTestRunner:
         """Initialize WebDriver"""
         logging.info("Setting up WebDriver...")
         options = webdriver.FirefoxOptions()
-        # Uncomment the line below to run headless
-        # options.add_argument('--headless')
         options.add_argument('--width=1920')
         options.add_argument('--height=1080')
-        
-        # Use webdriver_manager to automatically download and manage geckodriver
+
         service = FirefoxService(GeckoDriverManager().install())
         self.driver = webdriver.Firefox(service=service, options=options)
         self.wait = WebDriverWait(self.driver, WAIT_TIMEOUT)
@@ -162,10 +157,8 @@ class LectorTestRunner:
         if not value or value.strip() == '""':
             return ""
             
-        # Remove surrounding quotes
         value = value.strip().strip('"')
         
-        # Check for repetition pattern: "X" x N
         if ' x ' in value:
             parts = value.split(' x ')
             if len(parts) == 2:
@@ -182,13 +175,12 @@ class LectorTestRunner:
         """Navigate to the Create Lector page"""
         logging.info(f"Navigating to {CREATE_URL}")
         self.driver.get(CREATE_URL)
-        time.sleep(1)  # Wait for page load
+        time.sleep(1) 
         
     def fill_form(self, test_data):
         """Fill the form with test data"""
         logging.info(f"Filling form with data: {test_data}")
         
-        # Parse all values
         primer_nombre = self.parse_test_value(test_data.get('Primer Nombre', ''))
         segundo_nombre = self.parse_test_value(test_data.get('Segundo Nombre', ''))
         primer_apellido = self.parse_test_value(test_data.get('Primer Apellido', ''))
@@ -197,49 +189,42 @@ class LectorTestRunner:
         telefono = self.parse_test_value(test_data.get('Telefono', ''))
         correo = self.parse_test_value(test_data.get('Correo', ''))
         
-        # Fill Primer Nombre
         if primer_nombre:
             field = self.driver.find_element(By.CSS_SELECTOR, "[data-testid='primernombre']")
             field.clear()
             field.send_keys(primer_nombre)
             logging.debug(f"Primer Nombre: {primer_nombre}")
             
-        # Fill Segundo Nombre
         if segundo_nombre:
             field = self.driver.find_element(By.CSS_SELECTOR, "[data-testid='segundonombre']")
             field.clear()
             field.send_keys(segundo_nombre)
             logging.debug(f"Segundo Nombre: {segundo_nombre}")
             
-        # Fill Primer Apellido
         if primer_apellido:
             field = self.driver.find_element(By.CSS_SELECTOR, "[data-testid='primerapellido']")
             field.clear()
             field.send_keys(primer_apellido)
             logging.debug(f"Primer Apellido: {primer_apellido}")
             
-        # Fill Segundo Apellido
         if segundo_apellido:
             field = self.driver.find_element(By.CSS_SELECTOR, "[data-testid='segundoapellido']")
             field.clear()
             field.send_keys(segundo_apellido)
             logging.debug(f"Segundo Apellido: {segundo_apellido}")
             
-        # Fill CI
         if ci:
             field = self.driver.find_element(By.CSS_SELECTOR, "[data-testid='ci']")
             field.clear()
             field.send_keys(ci)
             logging.debug(f"CI: {ci}")
             
-        # Fill Teléfono
         if telefono:
             field = self.driver.find_element(By.CSS_SELECTOR, "[data-testid='telefono']")
             field.clear()
             field.send_keys(telefono)
             logging.debug(f"Teléfono: {telefono}")
             
-        # Fill Correo
         if correo:
             field = self.driver.find_element(By.CSS_SELECTOR, "[data-testid='correo']")
             field.clear()
@@ -251,7 +236,7 @@ class LectorTestRunner:
         logging.info("Submitting form...")
         submit_button = self.driver.find_element(By.CSS_SELECTOR, "[data-testid='submit-button']")
         submit_button.click()
-        time.sleep(2)  # Wait for submission and validation
+        time.sleep(2)  
         
     def check_validation_errors(self):
         """
@@ -260,7 +245,6 @@ class LectorTestRunner:
         """
         errors = {}
         
-        # Check all error spans
         error_fields = ['primernombre', 'segundonombre', 'primerapellido', 'segundoapellido', 
                        'ci', 'telefono', 'correo']
         
@@ -318,22 +302,16 @@ class LectorTestRunner:
         }
         
         try:
-            # Navigate to create page
             self.navigate_to_create_page()
             
-            # Fill form
             self.fill_form(test_case)
             
-            # Submit form
             self.submit_form()
             
-            # Check for errors
             errors = self.check_validation_errors()
             
-            # Check if on index page
             on_index = self.is_on_index_page()
             
-            # Determine actual result
             actual = self.determine_actual_result(len(errors) > 0, on_index)
             
             result['actual'] = actual
@@ -348,7 +326,6 @@ class LectorTestRunner:
             else:
                 result['notes'] = 'Stayed on Create page, but no errors detected'
             
-            # Log result
             status = "✓ PASSED" if result['passed'] else "✗ FAILED"
             logging.info(f"Result: {status}")
             logging.info(f"Expected: {expected}, Actual: {actual}")
@@ -378,14 +355,12 @@ class LectorTestRunner:
                 
             logging.info(f"Loaded {len(test_cases)} test cases")
             
-            # Setup WebDriver
             self.setup()
             
-            # Run each test
             for i, test_case in enumerate(test_cases, 1):
                 logging.info(f"\nTest {i}/{len(test_cases)}")
                 self.run_test_case(test_case)
-                time.sleep(1)  # Small delay between tests
+                time.sleep(1) 
                 
         except FileNotFoundError:
             logging.error(f"CSV file not found: {csv_file_path}")
@@ -394,20 +369,17 @@ class LectorTestRunner:
             logging.error(f"Error running tests: {str(e)}")
             raise
         finally:
-            # Teardown WebDriver
             self.teardown()
             
     def generate_report(self, output_file='lector_test_results.csv'):
         """Generate test results report"""
         logging.info(f"\nGenerating report: {output_file}")
         
-        # Calculate statistics
         total = len(self.test_results)
         passed = sum(1 for r in self.test_results if r['passed'])
         failed = total - passed
         pass_rate = (passed / total * 100) if total > 0 else 0
         
-        # Write results to CSV
         with open(output_file, 'w', newline='', encoding='utf-8') as file:
             fieldnames = ['caso', 'expected', 'actual', 'passed', 'notes']
             writer = csv.DictWriter(file, fieldnames=fieldnames)
@@ -422,7 +394,6 @@ class LectorTestRunner:
                     'notes': result['notes']
                 })
         
-        # Print summary
         logging.info("\n" + "="*60)
         logging.info("TEST EXECUTION SUMMARY")
         logging.info("="*60)
@@ -431,7 +402,6 @@ class LectorTestRunner:
         logging.info(f"Failed: {failed} ({100-pass_rate:.1f}%)")
         logging.info("="*60)
         
-        # Print failed tests
         if failed > 0:
             logging.info("\nFAILED TESTS:")
             for result in self.test_results:
@@ -457,15 +427,12 @@ def main():
     print("="*60)
     print()
     
-    # Configuration
     csv_file = 'BLACKBOX_BIBLIOTECA - LECTOR_TESTS.csv'
     
-    # Ask user for CSV file path
     user_input = input(f"Enter CSV file path (default: {csv_file}): ").strip()
     if user_input:
         csv_file = user_input
     
-    # Ask for base URL
     url_input = input(f"Enter application URL (default: {BASE_URL}): ").strip()
     base_url = url_input if url_input else BASE_URL
     
@@ -477,14 +444,12 @@ def main():
     
     input("Press Enter to start testing...")
     
-    # Create test runner
+
     runner = LectorTestRunner(base_url=base_url)
     
     try:
-        # Run all tests
         runner.run_all_tests(csv_file)
         
-        # Generate report
         stats = runner.generate_report('lector_test_results.csv')
         
         print("\n" + "="*60)
@@ -494,7 +459,7 @@ def main():
         print(f"Logs saved to: lector_tests.log")
         print()
         
-        return stats['passed'] == stats['total']  # Return success if all passed
+        return stats['passed'] == stats['total'] 
         
     except Exception as e:
         logging.error(f"Test execution failed: {str(e)}")

@@ -18,7 +18,6 @@ from selenium.webdriver.firefox.service import Service as FirefoxService
 from webdriver_manager.firefox import GeckoDriverManager
 import logging
 
-# Configure logging
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(levelname)s - %(message)s',
@@ -33,7 +32,6 @@ CREATE_URL = f"{BASE_URL}/Libro/Create"
 INDEX_URL = f"{BASE_URL}/Libro/Index"
 WAIT_TIMEOUT = 10
 
-# Validation Rules (from Entity Model)
 VALIDATIONS = {
     'titulo': {
         'required': True,
@@ -98,12 +96,10 @@ class LibroTestRunner:
         """Initialize WebDriver"""
         logging.info("Setting up WebDriver...")
         options = webdriver.FirefoxOptions()
-        # Uncomment the line below to run headless
-        # options.add_argument('--headless')
+
         options.add_argument('--width=1920')
         options.add_argument('--height=1080')
         
-        # Use webdriver_manager to automatically download and manage geckodriver
         service = FirefoxService(GeckoDriverManager().install())
         self.driver = webdriver.Firefox(service=service, options=options)
         self.wait = WebDriverWait(self.driver, WAIT_TIMEOUT)
@@ -126,10 +122,8 @@ class LibroTestRunner:
         if not value or value.strip() == '""':
             return ""
             
-        # Remove surrounding quotes
         value = value.strip().strip('"')
-        
-        # Check for repetition pattern: "X" x N
+
         if ' x ' in value or ' x' in value:
             parts = value.split(' x ')
             if len(parts) == 2:
@@ -146,56 +140,49 @@ class LibroTestRunner:
         """Navigate to the Create Libro page"""
         logging.info(f"Navigating to {CREATE_URL}")
         self.driver.get(CREATE_URL)
-        time.sleep(1)  # Wait for page load
+        time.sleep(1)
         
     def fill_form(self, test_data):
         """Fill the form with test data"""
         logging.info(f"Filling form with data: {test_data}")
         
-        # Parse all values
         titulo = self.parse_test_value(test_data.get('TITULO', ''))
         isbn = self.parse_test_value(test_data.get('ISBN', ''))
         sinopsis = self.parse_test_value(test_data.get('Sinopsis', ''))
         fecha_pub = self.parse_test_value(test_data.get('FechaPub', ''))
         idioma = self.parse_test_value(test_data.get('Idioma', ''))
         edicion = self.parse_test_value(test_data.get('Edicion', ''))
-        
-        # Fill Titulo
+
         if titulo:
             titulo_field = self.driver.find_element(By.CSS_SELECTOR, "[data-testid='titulo']")
             titulo_field.clear()
             titulo_field.send_keys(titulo)
             logging.debug(f"Titulo: {titulo[:50]}..." if len(titulo) > 50 else f"Titulo: {titulo}")
             
-        # Fill ISBN
         if isbn:
             isbn_field = self.driver.find_element(By.CSS_SELECTOR, "[data-testid='isbn']")
             isbn_field.clear()
             isbn_field.send_keys(isbn)
             logging.debug(f"ISBN: {isbn}")
             
-        # Fill Sinopsis
         if sinopsis:
             sinopsis_field = self.driver.find_element(By.CSS_SELECTOR, "[data-testid='sinopsis']")
             sinopsis_field.clear()
             sinopsis_field.send_keys(sinopsis)
             logging.debug(f"Sinopsis: {sinopsis[:50]}..." if len(sinopsis) > 50 else f"Sinopsis: {sinopsis}")
             
-        # Fill FechaPublicacion
         if fecha_pub:
             fecha_field = self.driver.find_element(By.CSS_SELECTOR, "[data-testid='fechapublicacion']")
             fecha_field.clear()
             fecha_field.send_keys(fecha_pub)
             logging.debug(f"FechaPublicacion: {fecha_pub}")
             
-        # Fill Idioma
         if idioma:
             idioma_field = self.driver.find_element(By.CSS_SELECTOR, "[data-testid='idioma']")
             idioma_field.clear()
             idioma_field.send_keys(idioma)
             logging.debug(f"Idioma: {idioma[:30]}..." if len(idioma) > 30 else f"Idioma: {idioma}")
             
-        # Fill Edicion
         if edicion:
             edicion_field = self.driver.find_element(By.CSS_SELECTOR, "[data-testid='edicion']")
             edicion_field.clear()
@@ -207,7 +194,7 @@ class LibroTestRunner:
         logging.info("Submitting form...")
         submit_button = self.driver.find_element(By.CSS_SELECTOR, "[data-testid='submit-button']")
         submit_button.click()
-        time.sleep(2)  # Wait for submission and validation
+        time.sleep(2) 
         
     def check_validation_errors(self):
         """
@@ -216,7 +203,6 @@ class LibroTestRunner:
         """
         errors = {}
         
-        # Check all error spans
         error_fields = ['titulo', 'isbn', 'sinopsis', 'fechapublicacion', 'idioma', 'edicion']
         
         for field in error_fields:
@@ -333,14 +319,12 @@ class LibroTestRunner:
                 
             logging.info(f"Loaded {len(test_cases)} test cases")
             
-            # Setup WebDriver
             self.setup()
             
-            # Run each test
             for i, test_case in enumerate(test_cases, 1):
                 logging.info(f"\nTest {i}/{len(test_cases)}")
                 self.run_test_case(test_case)
-                time.sleep(1)  # Small delay between tests
+                time.sleep(1)  
                 
         except FileNotFoundError:
             logging.error(f"CSV file not found: {csv_file_path}")
@@ -349,20 +333,17 @@ class LibroTestRunner:
             logging.error(f"Error running tests: {str(e)}")
             raise
         finally:
-            # Teardown WebDriver
             self.teardown()
             
     def generate_report(self, output_file='test_results.csv'):
         """Generate test results report"""
         logging.info(f"\nGenerating report: {output_file}")
         
-        # Calculate statistics
         total = len(self.test_results)
         passed = sum(1 for r in self.test_results if r['passed'])
         failed = total - passed
         pass_rate = (passed / total * 100) if total > 0 else 0
         
-        # Write results to CSV
         with open(output_file, 'w', newline='', encoding='utf-8') as file:
             fieldnames = ['caso', 'expected', 'actual', 'passed', 'notes']
             writer = csv.DictWriter(file, fieldnames=fieldnames)
@@ -377,7 +358,6 @@ class LibroTestRunner:
                     'notes': result['notes']
                 })
         
-        # Print summary
         logging.info("\n" + "="*60)
         logging.info("TEST EXECUTION SUMMARY")
         logging.info("="*60)
@@ -386,7 +366,6 @@ class LibroTestRunner:
         logging.info(f"Failed: {failed} ({100-pass_rate:.1f}%)")
         logging.info("="*60)
         
-        # Print failed tests
         if failed > 0:
             logging.info("\nFAILED TESTS:")
             for result in self.test_results:
@@ -412,15 +391,12 @@ def main():
     print("="*60)
     print()
     
-    # Configuration
     csv_file = 'BLACKBOX_BIBLIOTECA - LIBRO_TESTS.csv'
     
-    # Ask user for CSV file path
     user_input = input(f"Enter CSV file path (default: {csv_file}): ").strip()
     if user_input:
         csv_file = user_input
     
-    # Ask for base URL
     url_input = input(f"Enter application URL (default: {BASE_URL}): ").strip()
     base_url = url_input if url_input else BASE_URL
     
@@ -432,14 +408,11 @@ def main():
     
     input("Press Enter to start testing...")
     
-    # Create test runner
     runner = LibroTestRunner(base_url=base_url)
     
     try:
-        # Run all tests
         runner.run_all_tests(csv_file)
         
-        # Generate report
         stats = runner.generate_report('libro_test_results.csv')
         
         print("\n" + "="*60)
@@ -449,7 +422,7 @@ def main():
         print(f"Logs saved to: libro_tests.log")
         print()
         
-        return stats['passed'] == stats['total']  # Return success if all passed
+        return stats['passed'] == stats['total'] 
         
     except Exception as e:
         logging.error(f"Test execution failed: {str(e)}")
